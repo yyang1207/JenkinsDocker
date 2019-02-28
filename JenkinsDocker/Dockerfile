@@ -7,7 +7,7 @@ COPY JenkinsDockerWeb/*.csproj ./JenkinsDockerWeb/
 RUN dotnet restore
 
 # copy everything else and build app
-COPY JenkinsDocker/. ./JenkinsDockerWeb/
+COPY JenkinsDockerWeb/. ./JenkinsDockerWeb/
 WORKDIR /app/JenkinsDockerWeb
 RUN dotnet publish -c Release -o out
 
