@@ -1,20 +1,18 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
 FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /src
-COPY ["JenkinsDockerWeb/JenkinsDockerWeb.csproj", "JenkinsDockerWeb/"]
-RUN dotnet restore "JenkinsDockerWeb/JenkinsDockerWeb.csproj"
-COPY . .
-WORKDIR "/src/JenkinsDockerWeb"
-RUN dotnet build "JenkinsDockerWeb.csproj" -c Release -o /app
-
-FROM build AS publish
-RUN dotnet publish "JenkinsDockerWeb.csproj" -c Release -o /app
-
-FROM base AS final
 WORKDIR /app
-COPY --from=publish /app .
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY JenkinsDockerWeb/*.csproj ./JenkinsDockerWeb/
+RUN dotnet restore
+
+# copy everything else and build app
+COPY JenkinsDocker/. ./JenkinsDockerWeb/
+WORKDIR /app/JenkinsDockerWeb
+RUN dotnet publish -c Release -o out
+
+
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
+WORKDIR /app
+COPY --from=build /app/JenkinsDockerWeb/out ./
 ENTRYPOINT ["dotnet", "JenkinsDockerWeb.dll"]
