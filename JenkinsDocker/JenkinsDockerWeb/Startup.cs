@@ -42,12 +42,7 @@ namespace JenkinsDockerWeb
 
             app.UseHttpsRedirection();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "api/{controller=values}");
-            });
+            app.UseMvc();
         }
     }
 }
