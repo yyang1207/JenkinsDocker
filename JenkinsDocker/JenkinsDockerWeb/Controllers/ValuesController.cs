@@ -14,7 +14,9 @@ namespace JenkinsDockerWeb.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            string ip = Request.HttpContext.Connection.LocalIpAddress.MapToIPv4().ToString();
+            string port = Request.HttpContext.Connection.LocalPort.ToString();
+            return new string[] { ip, port };
         }
 
         // GET api/values/5
