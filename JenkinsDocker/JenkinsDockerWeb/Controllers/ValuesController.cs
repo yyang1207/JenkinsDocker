@@ -14,7 +14,11 @@ namespace JenkinsDockerWeb.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            string ip = Request.HttpContext.Connection.LocalIpAddress.MapToIPv4().ToString();
+            string ip = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+                        .Select(p => p.GetIPProperties())
+                        .SelectMany(p => p.UnicastAddresses)
+                        .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && !System.Net.IPAddress.IsLoopback(p.Address))
+                        .FirstOrDefault()?.Address.ToString();
             string port = Request.HttpContext.Connection.LocalPort.ToString();
             return new string[] { ip, port };
         }
