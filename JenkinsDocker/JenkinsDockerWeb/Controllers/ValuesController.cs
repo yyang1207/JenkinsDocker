@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,11 +17,7 @@ namespace JenkinsDockerWeb.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            string ip = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
-                        .Select(p => p.GetIPProperties())
-                        .SelectMany(p => p.UnicastAddresses)
-                        .Where(p => p.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && !System.Net.IPAddress.IsLoopback(p.Address))
-                        .FirstOrDefault()?.Address.ToString();
+            string ip = "192.168.0.1";
             string port = Request.HttpContext.Connection.LocalPort.ToString();
             return new string[] { ip, port };
         }
