@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace JenkinsDockerWeb
 {
@@ -20,9 +21,10 @@ namespace JenkinsDockerWeb
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls("http://*:5006") //修改服务在docker中启动端口
-                //.UseKestrel()
+                //.UseKestrel()
                 //.UseContentRoot(Directory.GetCurrentDirectory())
                 //.UseIISIntegration()
+                //.UseNLog()
                 .UseStartup<Startup>();
     }
 }

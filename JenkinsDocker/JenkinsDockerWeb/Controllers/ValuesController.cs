@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace JenkinsDockerWeb.Controllers
 {
@@ -13,12 +14,26 @@ namespace JenkinsDockerWeb.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        //private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
+        private ILogger _logger;
+
+        public ValuesController(ILogger<ValuesController> logger)
+        {
+            _logger = logger;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
             string ip = "192.168.0.2";
             string port = Request.HttpContext.Connection.LocalPort.ToString();
+
+            _logger.LogInformation("这是一条测试日志信息");
+            _logger.LogWarning("这是一条测试日志信息Warn");
+            _logger.LogError("这是一条测试日志信息Error");
+
             return new string[] { ip, port };
         }
 
