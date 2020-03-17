@@ -38,8 +38,8 @@ namespace JenkinsDockerWeb.Controllers
 
             List<string> lst = new List<string>();
             lst.Add($"X-Real-IP  --->   {Request.Headers["X-Real-IP"]}      ");
-            lst.Add($"Proxy  --->   {Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString()}:{Request.HttpContext.Connection.RemotePort}");
-
+            lst.Add($"RemoteIpAddress  --->   {Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString()}:{Request.HttpContext.Connection.RemotePort}");
+            lst.Add($"X-Forwarded-For   --->    {Request.Headers["X-Forwarded-For"]}");
 
             return lst;
         }
