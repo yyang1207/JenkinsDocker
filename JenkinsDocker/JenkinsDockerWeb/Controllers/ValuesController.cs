@@ -27,14 +27,21 @@ namespace JenkinsDockerWeb.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            string ip = "192.168.0.2";
-            string port = Request.HttpContext.Connection.LocalPort.ToString();
+            //string ip = "192.168.0.2";
+            //string port = Request.HttpContext.Connection.LocalPort.ToString();
 
-            _logger.LogInformation("这是一条测试日志信息");
-            _logger.LogWarning("这是一条测试日志信息Warn");
-            _logger.LogError("这是一条测试日志信息Error");
+            ////_logger.LogInformation("这是一条测试日志信息");
+            ////_logger.LogWarning("这是一条测试日志信息Warn");
+            ////_logger.LogError("这是一条测试日志信息Error");
 
-            return new string[] { ip, port };
+            //return new string[] { ip, port };
+
+            List<string> lst = new List<string>();
+            lst.Add($"X-Real-IP  --->   {Request.Headers["X-Real-IP"]}      ");
+            lst.Add($"Proxy  --->   {Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString()}:{Request.HttpContext.Connection.RemotePort}");
+
+
+            return lst;
         }
 
         // GET api/values/5

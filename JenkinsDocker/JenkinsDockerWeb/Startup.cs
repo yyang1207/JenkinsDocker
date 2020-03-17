@@ -42,7 +42,7 @@ namespace JenkinsDockerWeb
                 app.UseHsts();
             }
 
-            loggerFactory.AddNLog();
+            //loggerFactory.AddNLog();
 
             //loggerFactory.AddNLog();
             //app.AddNLogWeb();
