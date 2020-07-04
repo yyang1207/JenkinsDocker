@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /app
 # copy csproj and restore as distinct layers
 COPY *.sln .
@@ -11,7 +11,7 @@ WORKDIR /app/JenkinsDockerWeb
 RUN dotnet publish -c Release -o out
 
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS runtime
 WORKDIR /app
 COPY --from=build /app/JenkinsDockerWeb/out ./
 ENTRYPOINT ["dotnet", "JenkinsDockerWeb.dll"]
