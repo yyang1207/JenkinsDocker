@@ -16,4 +16,4 @@ spec:
         - name: firstappdemo 
           image: k8simagerepository.azurecr.io/firstappdemo
           ports:
-          - containerPort: 80
+          - containerPort: 5006
