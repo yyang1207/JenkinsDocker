@@ -17,7 +17,7 @@ namespace JenkinsDockerWeb.Controllers
         //private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
         private ILogger _logger;
-
+        private static Guid _Identity=Guid.NewGuid();
         public ValuesController(ILogger<ValuesController> logger)
         {
             _logger = logger;
@@ -40,6 +40,7 @@ namespace JenkinsDockerWeb.Controllers
             lst.Add($"X-Real-IP  --->   {Request.Headers["X-Real-IP"]}      ");
             lst.Add($"RemoteIpAddress  --->   {Request.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString()}:{Request.HttpContext.Connection.RemotePort}");
             lst.Add($"X-Forwarded-For   --->    {Request.Headers["X-Forwarded-For"]}");
+            lst.Add(_Identity.ToString());
 
             return lst;
         }
