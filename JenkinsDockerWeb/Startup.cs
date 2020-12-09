@@ -15,6 +15,9 @@ using NLog.Web;
 
 namespace JenkinsDockerWeb
 {
+    /// <summary>
+    /// 测试1
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)
